@@ -5,17 +5,22 @@ var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.spli
 console.log(baseUrl);
 
 function addNote(){
-  var title = document.getElementById("add-title").value;
-  var text = document.getElementById("add-body").value;
-  var params = "text="+text+"&title="+title;
+  var fname = document.getElementById("add-fname").value;
+  var lname = document.getElementById("add-lname").value;
+  var mail = document.getElementById("add-mail").value;
+  var pass = document.getElementById("add-pass").value;
+
+  var params = "fname="+fname+"&lname="+lname+"&mail="+mail+"&pass="+pass;
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var data = JSON.parse(this.responseText);
-      document.getElementById("notes").innerHTML = "<tr><td id='id1'>"+data._id+"</td><td id='title1'></td><td id='body1'></td><td><button onclick='displayNote()'>Get Note</button></td><td><button onclick='editNote()'>Edit</button></td><td><button onclick='deleteNote()'>Delete</button></td></tr>";
-      document.getElementById("add-title").value = "";
-      document.getElementById("add-body").value = "";
+      document.getElementById("notes").innerHTML = "<tr><td id='id1'>"+data._id+"</td><td id='fname1'></td><td id='lname1'></td><td id='mail1'></td><td id='pass1'></td><td><button onclick='displayNote()'>Get Note</button></td><td><button onclick='editNote()'>Edit</button></td><td><button onclick='deleteNote()'>Delete</button></td></tr>";
+      document.getElementById("add-fname").value = "";
+      document.getElementById("add-lname").value = "";
+      document.getElementById("add-mail").value = "";
+      document.getElementById("add-pass").value = "";
     }
   };
   xhttp.open("POST", baseUrl+"notes", true);
@@ -30,8 +35,10 @@ function displayNote(){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var data = JSON.parse(this.responseText);
-      document.getElementById("title1").innerHTML = data.title;
-      document.getElementById("body1").innerHTML =  data.text;
+      document.getElementById("fname1").innerHTML = data.fname;
+      document.getElementById("lname1").innerHTML = data.lname;
+      document.getElementById("mail1").innerHTML = data.mail;
+      document.getElementById("pass1").innerHTML =  data.pass;
     }
   };
   xhttp.open("GET", baseUrl+"notes/"+id, true);
@@ -39,8 +46,10 @@ function displayNote(){
 }
 
 function editNote(){
-  document.getElementById("edit-title").value = document.getElementById("title1").innerHTML;
-  document.getElementById("edit-body").value = document.getElementById("body1").innerHTML;
+  document.getElementById("edit-fname").value = document.getElementById("fname1").innerHTML;
+  document.getElementById("edit-lname").value = document.getElementById("lname1").innerHTML;
+  document.getElementById("edit-mail").value = document.getElementById("mail1").innerHTML;
+  document.getElementById("edit-pass").value = document.getElementById("pass1").innerHTML;
   document.getElementById('spoiler').style.display = 'block';
 }
 
@@ -50,6 +59,8 @@ function saveEdit(){
   var id = document.getElementById ( "id1" ).innerText;
 
   var params = "text="+editText+"&title="+editTitle;
+
+  console.log(params);
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -63,6 +74,10 @@ function saveEdit(){
   xhttp.open("PUT", baseUrl+"notes/"+id, true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send(params);
+
+
+
+
 }
 
 function deleteNote(){
@@ -72,8 +87,10 @@ function deleteNote(){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       document.getElementById("id1").innerHTML = "";
-      document.getElementById("title1").innerHTML = "";
-      document.getElementById("body1").innerHTML =  "";
+      document.getElementById("fname1").innerHTML = "";
+      document.getElementById("lname1").innerHTML =  "";
+      document.getElementById("mail1").innerHTML =  "";
+      document.getElementById("pass1").innerHTML =  "";
     }
   };
   xhttp.open("DELETE", baseUrl+"notes/"+id, true);
