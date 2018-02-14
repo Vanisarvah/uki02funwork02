@@ -16,7 +16,7 @@ function addNote(){
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       var data = JSON.parse(this.responseText);
-      document.getElementById("notes").innerHTML = "<tr><td id='id1'>"+data._id+"</td><td id='fname1'></td><td id='lname1'></td><td id='mail1'></td><td id='pass1'></td><td><button onclick='displayNote()'>Get Note</button></td><td><button onclick='editNote()'>Edit</button></td><td><button onclick='deleteNote()'>Delete</button></td></tr>";
+      document.getElementById("notes").innerHTML = "<tr><td style ='display:none;' id='id1'>"+data._id+"</td><td id='fname1'></td><td id='lname1'></td><td id='mail1'></td><td id='pass1'></td><td><button onclick='displayNote()'>Get Note</button></td><td><button onclick='editNote()'>Edit</button></td><td><button onclick='deleteNote()'>Delete</button></td></tr>";
       document.getElementById("add-fname").value = "";
       document.getElementById("add-lname").value = "";
       document.getElementById("add-mail").value = "";
@@ -54,11 +54,15 @@ function editNote(){
 }
 
 function saveEdit(){
-  var editTitle = document.getElementById("edit-title").value;
-  var editText = document.getElementById("edit-body").value;
+  var editFname = document.getElementById("edit-fname").value;
+  var editLname = document.getElementById("edit-lname").value;
+  var editMail = document.getElementById("edit-mail").value;
+  var editPass = document.getElementById("edit-pass").value;
+
   var id = document.getElementById ( "id1" ).innerText;
 
-  var params = "text="+editText+"&title="+editTitle;
+  var params = "fname="+editFname+"&lname="+editLname+"&mail="+editMail+"&pass="+editPass;
+
 
   console.log(params);
 
